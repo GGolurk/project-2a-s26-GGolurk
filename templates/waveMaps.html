@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block content %}
+    {% for each_map in wave_maps %}
+        <div class="card">
+            <div class="card-header">
+                <h5>Map: {{ each_map['Map'] }}</h5>
+            </div>
+            <div class="card-body">
+                <p>{{ each_map['Description'] }}</p>
+            </div>
+            <div class="card-footer">
+                <p>Reccomended amount of SPU gear - {{ each_map['SPU'] }}</p>
+                <br>
+            </div>
+        </div>
+    {% endfor %}
+{% endblock %}
