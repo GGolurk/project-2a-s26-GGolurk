@@ -32,7 +32,15 @@ def maplist():
 @app.route('/addMap', methods=['GET', 'POST'])
 def addMap():
     if request.method == 'POST':
-        print('baaanger')
+        map_name = request.form.get('map_name')
+        map_description = request.form.get('map_description')
+        spu_amount = request.form.get('spu_amount')
+        waveMap = {
+            'Map': map_name,
+            'Description': map_description,
+            'SPU': spu_amount
+        }
+        waveMaps.append(waveMap)
     return render_template('addMap.html')
 
 if __name__ == '__main__':
