@@ -35,12 +35,21 @@ def addMap():
         map_name = request.form.get('map_name')
         map_description = request.form.get('map_description')
         spu_amount = request.form.get('spu_amount')
+
+        # Validating input a little bit, just sends you home if it fails.
+        # spu_amount is capped at three because of how the amounts of gear
+        # abilities are tracked in the Splatoon community, always an "X.X" format.
+        if len(map_name) > 50 or len(map_description) > 250 or len(spu_amount) > 3:
+            return render_template("base.html")
+
         waveMap = {
             'Map': map_name,
             'Description': map_description,
             'SPU': spu_amount
         }
         waveMaps.append(waveMap)
+        # Sends you to check out the maps after you add it!
+        return render_template('waveMaps.html', wave_maps=waveMaps)
     return render_template('addMap.html')
 
 if __name__ == '__main__':
