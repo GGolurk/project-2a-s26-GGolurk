@@ -6,6 +6,9 @@
             <div class="card">
                 <div class="card-header bg-primary text-white">
                     <h5>Map: {{ each_map['Map'] }}</h5>
+                    <form action="{{'removeMap/'+each_map.Map|string}}" method="POST" style="display: inline;">
+                        <button type="submit" class = "btn btn-info">Remove</button>
+                    </form>
                 </div>
               <div class="card-body bg-secondary text-white">
                     <p>{{ each_map['Description'] }}</p>

@@ -52,11 +52,15 @@ def addMap():
         return render_template('waveMaps.html', wave_maps=waveMaps)
     return render_template('addMap.html')
 
-@app.route('/removeMap', methods=['GET', 'POST'])
-def removeMap():
-    if request.method == 'POST':
-        print("ohkay")
-    return render_template('removeMap.html')
+@app.route('/removeMap/<string:map_name>', methods=['POST'])
+def del_map_by_id(map_name):
+    for eachMap in waveMaps:
+        if eachMap['Map'] == map_name:
+            waveMaps.remove(eachMap)
+            return f'<h1>Map was removed. <a href="http://127.0.0.1:5000/">Continue</a></h1>'
+        # makes you go home if not found
+    return render_template('base.html')
+
 
 if __name__ == '__main__':
     app.run()
