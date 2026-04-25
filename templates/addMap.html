@@ -3,14 +3,43 @@
 {% block content %}
     <h2>Add a new map!</h2>
     <form method="POST">
-        <label for="map_name">What is the map name?</label>
-        <input type="text" id="map_name" name="map_name" required>
         <br>
-        <label for="map_description">Why is this map good for wave?</label>
-        <input type="text" id="map_description" name="map_description" required>
+        <div class="row">
+            <div class="col-sm-3">
+                <p>" "</p>
+            </div>
+            <div class="col-sm-2">
+                <label for="map_name">What is the map name?</label>
+            </div>
+            <div class="col-sm-4">
+                <input type="text" id="map_name" name="map_name" required>
+            </div>
+        </div>
         <br>
-        <label for="spu_amount">How much SPU should be run here?:</label>
-        <input type="text" id="spu_amount" name="spu_amount" required>
+        <div class="col-sm-3">
+                <p>" "</p>
+            </div>
+        <div class="row">
+            <div class="col-sm-2">
+                <label for="map_description">Why is this map good for wave?</label>
+            </div>
+            <div class="col-sm-4">
+                <input type="text" id="map_description" name="map_description" required>
+            </div>
+        </div>
+        <br>
+        <div class="col-sm-3">
+                <p>" "</p>
+            </div>
+        <div class="row">
+            <div class="col-sm-2">
+                <label for="spu_amount">How much SPU should be run here?:</label>
+            </div>
+            <div class="col-sm-4">
+                <input type="text" id="spu_amount" name="spu_amount" required>
+            </div>
+        </div>
+        <br>
         <button type="submit">Submit</button>
     </form>
 {% endblock %}
