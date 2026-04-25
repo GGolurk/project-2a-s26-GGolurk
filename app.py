@@ -52,5 +52,11 @@ def addMap():
         return render_template('waveMaps.html', wave_maps=waveMaps)
     return render_template('addMap.html')
 
+@app.route('/removeMap', methods=['GET', 'POST'])
+def removeMap():
+    if request.method == 'POST':
+        print("ohkay")
+    return render_template('removeMap.html')
+
 if __name__ == '__main__':
     app.run()
