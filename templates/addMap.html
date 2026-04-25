@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h2>Add a new map!</h2>
+    <form method="POST">
+        <label for="dest_name">Enter Destination Name:</label>
+        <input type="text" id="dest_name" name="dest_name" required>
+        <button type="submit">Submit</button>
+    </form>
+{% endblock %}

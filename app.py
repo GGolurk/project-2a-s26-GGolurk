@@ -1,7 +1,7 @@
 # The purpose of this project is to display the best maps
 # for the special weapon Wave Breaker in the video game of
 # Splatoon 3.
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 
 app = Flask(__name__)
 
@@ -29,6 +29,11 @@ def home():  # put application's code here
 def maplist():
     return render_template('waveMaps.html', wave_maps=waveMaps)
 
+@app.route('/addMap', methods=['GET', 'POST'])
+def addMap():
+    if request.method == 'POST':
+        print('baaanger')
+    return render_template('addMap.html')
 
 if __name__ == '__main__':
     app.run()
