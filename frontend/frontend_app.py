@@ -2,35 +2,25 @@
 # for the special weapon Wave Breaker in the video game of
 # Splatoon 3.
 from flask import Flask, render_template, request
+import requests
 
-app = Flask(__name__)
+frontend_app = Flask(__name__)
+backend_url = 'http://127.0.0.1:5001'
 
-## In memory data structure
-waveMaps = [
-    {'Map':'Hagglefish Market', 'Description':
-    'Incredibly good spots in mid, with decent utility both on offense and defense. Better on tower control since you can throw wave on the tower.',
-     'SPU':1.1},
-    {'Map':'Makomart',
-     'Description':'The entire middle of the map is a wave breaker spot, but there are also good spots on the stacks for defense and offense.',
-     'SPU':0.0},
-    {'Map':'Flounder Heights',
-     'Description':'You can\'t mess up throwing wave on this map, but try to aim for higher locations for better coverage.',
-     'SPU':0.1},
-    {'Map':'Um\'ami Ruins',
-     'Description':'Very good spots if you know where to look for them. Nothing spectacular, but wave is good in all areas.',
-     'SPU':1.1},
-]
-
-@app.route('/')
+@frontend_app.route('/')
 def home():  # put application's code here
     return render_template('base.html')
 
-@app.route('/maplist')
+@frontend_app.route('/maplist')
 def maplist():
-    return render_template('waveMaps.html', wave_maps=waveMaps)
+    response = requests.get(backend_url + '/api')
+    return render_template('waveMaps.html', wave_maps=response.json())
 
-@app.route('/addMap', methods=['GET', 'POST'])
+@frontend_app.route('/addMap', methods=['GET', 'POST'])
 def addMap():
+    if request.method == 'GET':
+        return render_template('addMap.html')
+
     if request.method == 'POST':
         map_name = request.form.get('map_name')
         map_description = request.form.get('map_description')
@@ -47,20 +37,14 @@ def addMap():
             'Description': map_description,
             'SPU': spu_amount
         }
-        waveMaps.append(waveMap)
-        # Sends you to check out the maps after you add it!
-        return render_template('waveMaps.html', wave_maps=waveMaps)
-    return render_template('addMap.html')
+        response = requests.post(backend_url + '/api/new', json=waveMap)
+        # Sends you home
+        return render_template('base.html')
 
-@app.route('/removeMap/<string:map_name>', methods=['POST'])
+@frontend_app.route('/removeMap/<string:map_name>', methods=['POST'])
 def del_map_by_id(map_name):
-    for eachMap in waveMaps:
-        if eachMap['Map'] == map_name:
-            waveMaps.remove(eachMap)
-            return f'<h1>Map was removed. <a href="http://127.0.0.1:5000/">Continue</a></h1>'
-        # makes you go home if not found
-    return render_template('base.html')
-
+    response = requests.delete(backend_url + '/api/remove/' + map_name)
+    return f'<h1>Map was removed. <a href="http://127.0.0.1:5000/">Continue</a></h1>'
 
 if __name__ == '__main__':
-    app.run()
+    frontend_app.run()
