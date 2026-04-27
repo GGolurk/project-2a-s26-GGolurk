@@ -29,8 +29,16 @@ def addMap():
         # Validating input a little bit, just sends you home if it fails.
         # spu_amount is capped at three because of how the amounts of gear
         # abilities are tracked in the Splatoon community, always an "X.X" format.
-        if len(map_name) > 50 or len(map_description) > 250 or len(spu_amount) > 3:
-            return render_template("base.html")
+        if len(map_name) > 20 or len(map_description) > 250 or len(spu_amount) > 3:
+            return f'<h1>Invalid input goober. <a href="http://127.0.0.1:5000/addMap">Retry</a></h1>'
+        # specifically validating spu amount, which must be a float between
+        # the values of 0.0 and 3.9 (the highest amount possible in game).
+        try:
+            float(spu_amount)
+            if spu_amount[1] != '.' or float(spu_amount) >= 4.0 or float(spu_amount) < 0.0:
+                return f'<h1>Invalid input. <a href="http://127.0.0.1:5000/addMap">Retry</a></h1>'
+        except ValueError:
+            return f'<h1>Invalid input. <a href="http://127.0.0.1:5000/addMap">Retry</a></h1>'
 
         waveMap = [{
             'map': map_name,
