@@ -36,5 +36,18 @@ def add_map():
     conn.close()
     return jsonify({"map": map_name}), 201
 
+@backend_app.route("/api/remove", methods=["POST"])
+def remove_map():
+    data = request.get_json()
+    map_name = data[0]
+    #TODO validate here too
+
+    conn = get_db_connection()
+    conn.execute('DELETE FROM waveMaps WHERE map = ?',
+                 (map_name,))
+    conn.commit()
+    conn.close()
+    return jsonify(map_name), 200
+
 if __name__ == "__main__":
-    backend_app.run()
+    backend_app.run(port=5001, debug=True)

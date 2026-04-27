@@ -5,16 +5,16 @@
         <div class="container mt-4">
             <div class="card">
                 <div class="card-header bg-primary text-white">
-                    <h5>Map: {{ each_map['Map'] }}</h5>
-                    <form action="{{'removeMap/'+each_map.Map|string}}" method="POST" style="display: inline;">
+                    <h5>Map: {{ each_map['map'] }}</h5>
+                    <form action="{{'removeMap/'+each_map.map|string}}" method="POST" style="display: inline;">
                         <button type="submit" class = "btn btn-info">Remove</button>
                     </form>
                 </div>
               <div class="card-body bg-secondary text-white">
-                    <p>{{ each_map['Description'] }}</p>
+                    <p>{{ each_map['description'] }}</p>
                 </div>
                 <div class="card-footer bg-secondary text-white">
-                   <p>Recommended amount of SPU gear - {{ each_map['SPU'] }}</p>
+                   <p>Recommended amount of SPU gear - {{ each_map['spu'] }}</p>
                     <br>
                 </div>
             </div>
