@@ -32,19 +32,18 @@ def addMap():
         if len(map_name) > 50 or len(map_description) > 250 or len(spu_amount) > 3:
             return render_template("base.html")
 
-        waveMap = {
-            'Map': map_name,
-            'Description': map_description,
-            'SPU': spu_amount
-        }
+        waveMap = [{
+            'map': map_name,
+            'description': map_description,
+            'spu': spu_amount
+        }]
         response = requests.post(backend_url + '/api/new', json=waveMap)
-        # Sends you home
-        return render_template('base.html')
+        return f'<h1>Added map. <a href="http://127.0.0.1:5000/">Continue</a></h1>'
 
 @frontend_app.route('/removeMap/<string:map_name>', methods=['POST'])
 def del_map_by_id(map_name):
-    response = requests.delete(backend_url + '/api/remove/' + map_name)
+    response = requests.post(backend_url + '/api/remove', json=[map_name])
     return f'<h1>Map was removed. <a href="http://127.0.0.1:5000/">Continue</a></h1>'
 
 if __name__ == '__main__':
-    frontend_app.run()
+    frontend_app.run(port=5000, debug=True)
