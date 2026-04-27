@@ -51,7 +51,6 @@ def add_map():
 def remove_map():
     data = request.get_json()
     map_name = data[0]
-    #TODO validate here too
 
     conn = get_db_connection()
     conn.execute('DELETE FROM waveMaps WHERE map = ?',
