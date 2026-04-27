@@ -26,7 +26,18 @@ def add_map():
     map_name = data[0].get("map")
     map_description = data[0].get("description")
     map_spu = data[0].get("spu")
-    # TODO: Input validation on all fields prior to database insertion!
+
+    # Using frontend security for the backend.
+    # It's not duplication if someone malicious skips the frontend security!
+    if len(map_name) > 20 or len(map_description) > 250 or len(map_spu) > 3:
+        return jsonify("error"), 400
+
+    try:
+        float(map_spu)
+        if map_spu[1] != '.' or float(map_spu) >= 4.0 or float(map_spu) < 0.0:
+            return jsonify("error"), 400
+    except ValueError:
+        return jsonify("error"), 400
 
     # Connect to DB and insert information
     conn = get_db_connection()
